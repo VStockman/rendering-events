@@ -1,0 +1,12 @@
+.Event {
+  background-color: #d6f9dd;
+  border: 1px solid black;
+  color: black;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 3px;
+  position: absolute;
+  background-size: auto;
+}
