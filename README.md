@@ -1,71 +1,87 @@
-# Getting Started with Create React App
+# 📅 RENDERING EVENTS 📅
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Sujet
 
-## Available Scripts
+## L'objectif: Afficher des évenements sur un calendrier.
 
-In the project directory, you can run:
+La position relative des événements se calcule en en fonction de la bordure supérieure de la fenêtre, l'heure et la durée des événements.
+Par exemple : si le calendrier va de 00:00 à 24:00 et que l'écran est de 2400px de haut, un événement commençant à 12h00 et durant 1h sera positionné à 1200px du haut de l'écran et aura une hauteur de 100px.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Chevauchement d'évenements
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Les évenement peuvent recouvrir une même plage horaire. Auquel cas, on parle de _chevauchement_. Le _chevauchement_ de 2 évenements ne doit pas empêcher leur visibilité.
 
-### `npm test`
+Votre implémentation doit respecter les contraintes suivantes:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`1. Si A et B sont deux évenements en chevauchement, alors Largeur(A) = Largeur(B).`
 
-### `npm run build`
+`2. LargeurMax = largeur de la fenêtre`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`3. Si sur une plage horaire donnée, deux évenements A et B se chevauchent, alors Largeur(A) + Largeur(B) = LargeurMax`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Une illustration visuelle du problème est donnée ci-dessous.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## Input
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+L'input fournie dans ce repository est un tableau d'évenements ayant lieu le même jour (à des heures différentes)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```javascript
+{
+  id: 1,
+  start: '15:00', // The event starts at 03:00 pm
+  duration: 90 // The duration is expressed in minutes
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Output
 
-## Learn More
+Votre code devrait afficher les événements sur une page Web dans un conteneur couvrant toute la fenêtre.
+Le haut de la page représente 09h00. Le bas de la page représente 21h00.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Les événements devraient être représentés sous forme de `div` avec une couleur de fond et une bordure de 1px. La `div` doit afficher l'identifiant de l'événement.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Votre implémentation devrait être responsive (c'est-à-dire répondre aux événements `resize` de la fenêtre).
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## ⚠️ Dépendences ⚠️
 
-### Analyzing the Bundle Size
+Utiliser React (ou autre framework front équivalent). **Aucune autre librairie** qui ne soit pas purement utilitaire (ex: lodash) ou purement axée graphique / templating (ex: material UI)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![calendar version outlook](media-assets/calendar.png)
+_la version Microsoft Outlook ..._
 
-### Making a Progressive Web App
+## ⚠️ Modalités de rendu ⚠️
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+> \*\*Pour le rendu, Poussez sur une nouvelle branche git, ouvrez une merge request vers Main, et notifiez votre interlocuteur par message que le kata est fini.
 
-### Advanced Configuration
+# Motivation du kata & contexte
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+De plus en plus d’équipes de développement adoptent le paradigme **full-stack**, en demandant à tous leurs développeurs d’être en mesure de prendre en charge une tâche de front comme de back, selon les priorités du moment.
 
-### Deployment
+Les profils full-stack ayant un background orienté backend auront souvent plus de difficultés à s’emparer des concepts bas-niveau du front, qu’ils contournent en se cantonnant à des affichages très simplistes & des composants déjà existants.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+L’objectif de ce kata : challenger la compréhension du front bas-niveau du candidat, en construisant **un composant complexe from-scratch**.
 
-### `npm run build` fails to minify
+# Specification [RFC2119](https://microformats.org/wiki/rfc-2119-fr) du kata
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# rendering-events
+> Description précise & sans ambiguité sur les termes de ce qui est attendu
+
+**1. Fonctionnalité du projet**
+
+- Le défilement des évènements `DOIT` commencer à l’ouverture de la page web et satisfaire autant que possible les contraintes du sujet
+- Le projet `DOIT` pouvoir être ouvert sur n’importe quel navigateur
+
+**2. Démonstration du frontend craftsmanship**
+
+- Le projet `NE DOIT PAS` utiliser d’imports de librairies autres que librairies nécessaires au fonctionnement du framework utilisé (ex React: “react”, “react-dom”, ...)
+- L’affichage `DOIT` être [responsive](https://www.usabilis.com/responsive-web-design-site-web-adaptatif/)
+- Le projet `DEVRAIT` être implémenté en JS moderne [ES6](https://www.w3schools.com/js/js_es6.asp)
+- Le projet `PEUT` être implémenté en Typescript
+- Les informations `DEVRAIENT` être facilement lisibles et agréables à l’oeil
